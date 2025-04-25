@@ -1,0 +1,33 @@
+# Project Requirements and Dependencies
+
+# Core Dependencies
+langchain>=0.1.20
+langchain-openai>=0.1.8
+openai>=1.35.5
+faiss-cpu>=1.8.0
+python-dotenv>=1.0.1
+
+# Document Processing
+pypdf>=4.2.0
+pandas>=2.2.2
+
+# CLI Enhancement
+rich>=13.7.1
+click>=8.1.7
+tqdm>=4.66.4
+
+# Optional: Web Interface (for future enhancement)
+streamlit>=1.36.0
+gradio>=4.36.1
+
+# Development Dependencies (requirements-dev.txt)
+pytest>=8.2.2
+pytest-cov>=5.0.0
+pytest-mock>=3.12.0
+black>=24.4.2
+flake8>=7.1.0
+mypy>=1.10.1
+
+# Performance Monitoring (optional)
+psutil>=5.9.8
+prometheus-client>=0.20.0

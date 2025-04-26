@@ -1,0 +1,11 @@
+Technology,Description,Use Cases
+Machine Learning,Algorithms that learn from data without explicit programming,Recommendation systems; fraud detection; predictive analytics
+Deep Learning,Neural networks with multiple layers for complex pattern recognition,Image recognition; natural language processing; speech recognition
+Natural Language Processing,AI that understands and processes human language,Chatbots; translation services; sentiment analysis
+Computer Vision,AI that interprets and understands visual information,Autonomous vehicles; medical imaging; quality control
+Robotics,Integration of AI with mechanical systems,Manufacturing automation; surgical robots; service robots
+Expert Systems,AI that mimics human expert decision-making,Medical diagnosis; financial planning; troubleshooting
+Neural Networks,Computing systems inspired by biological neural networks,Pattern recognition; data classification; prediction
+Reinforcement Learning,Learning through interaction with environment and rewards,Game playing; robot navigation; resource allocation
+Fuzzy Logic,Reasoning with degrees of truth rather than binary logic,Control systems; decision making; approximate reasoning
+Genetic Algorithms,Optimization technique inspired by natural selection,Parameter optimization; feature selection; scheduling

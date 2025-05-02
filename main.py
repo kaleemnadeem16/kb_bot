@@ -13,6 +13,14 @@ import faiss
 import numpy as np
 from dotenv import load_dotenv
 
+# PDF processing import
+try:
+    from pypdf import PdfReader
+    PDF_AVAILABLE = True
+except ImportError:
+    PDF_AVAILABLE = False
+    print("⚠️  pypdf not installed. PDF support disabled.")
+
 # Load environment variables
 load_dotenv()
 
@@ -46,20 +54,28 @@ class SimpleKBBot:
         mode_text = "🔧 DEMO MODE" if self.demo_mode else "🤖 FULL MODE"
         print(f"{mode_text} Knowledge Base Bot initialized!")
     
-    def load_txt_files(self, data_folder: str = "data") -> None:
-        """Load all TXT files from the data folder"""
+    def load_documents(self, data_folder: str = "data") -> None:
+        """Load all supported files from the data folder"""
         data_path = Path(data_folder)
         if not data_path.exists():
             print(f"❌ Data folder '{data_folder}' not found!")
             return
         
+        # Find all supported files
         txt_files = list(data_path.glob("*.txt"))
-        if not txt_files:
-            print(f"❌ No TXT files found in '{data_folder}' folder!")
+        pdf_files = list(data_path.glob("*.pdf")) if PDF_AVAILABLE else []
+        
+        all_files = txt_files + pdf_files
+        
+        if not all_files:
+            print(f"❌ No supported files found in '{data_folder}' folder!")
             return
         
         print(f"📁 Found {len(txt_files)} TXT file(s)")
+        if PDF_AVAILABLE:
+            print(f"📁 Found {len(pdf_files)} PDF file(s)")
         
+        # Load TXT files
         for txt_file in txt_files:
             try:
                 with open(txt_file, 'r', encoding='utf-8') as f:
@@ -67,15 +83,50 @@ class SimpleKBBot:
                     if content:
                         self.documents.append({
                             'filename': txt_file.name,
-                            'content': content
+                            'content': content,
+                            'type': 'txt'
                         })
-                        print(f"✅ Loaded: {txt_file.name}")
+                        print(f"✅ Loaded TXT: {txt_file.name}")
                     else:
                         print(f"⚠️  Skipped empty file: {txt_file.name}")
             except Exception as e:
                 print(f"❌ Error loading {txt_file.name}: {e}")
         
+        # Load PDF files
+        if PDF_AVAILABLE:
+            for pdf_file in pdf_files:
+                try:
+                    content = self.extract_pdf_text(pdf_file)
+                    if content:
+                        self.documents.append({
+                            'filename': pdf_file.name,
+                            'content': content,
+                            'type': 'pdf'
+                        })
+                        print(f"✅ Loaded PDF: {pdf_file.name}")
+                    else:
+                        print(f"⚠️  Skipped empty PDF: {pdf_file.name}")
+                except Exception as e:
+                    print(f"❌ Error loading {pdf_file.name}: {e}")
+        
         print(f"📚 Successfully loaded {len(self.documents)} document(s)")
+    
+    def extract_pdf_text(self, pdf_path: Path) -> str:
+        """Extract text from PDF file"""
+        try:
+            reader = PdfReader(pdf_path)
+            text = ""
+            
+            for page_num, page in enumerate(reader.pages):
+                page_text = page.extract_text()
+                if page_text:
+                    text += f"\n--- Page {page_num + 1} ---\n"
+                    text += page_text
+            
+            return text.strip()
+        except Exception as e:
+            print(f"❌ Error extracting text from {pdf_path.name}: {e}")
+            return ""
     
     def chunk_text(self, text: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
         """Split text into overlapping chunks"""
@@ -299,10 +350,10 @@ def main():
     bot = SimpleKBBot()
     
     # Load documents
-    bot.load_txt_files()
+    bot.load_documents()
     
     if not bot.documents:
-        print("\n❌ No documents loaded. Please add TXT files to the 'data' folder.")
+        print("\n❌ No documents loaded. Please add TXT or PDF files to the 'data' folder.")
         return
     
     # Build vector index

@@ -1,0 +1,40 @@
+# Machine Learning Fundamentals
+
+## What is Machine Learning?
+
+Machine Learning (ML) is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed. It focuses on developing algorithms that can identify patterns in data and make predictions or decisions based on that information.
+
+## Types of Machine Learning
+
+### Supervised Learning
+In supervised learning, algorithms learn from labeled training data to make predictions on new, unseen data. Examples include:
+- Classification: Predicting categories (spam vs. not spam)
+- Regression: Predicting continuous values (house prices)
+
+### Unsupervised Learning
+Unsupervised learning finds hidden patterns in data without labeled examples:
+- Clustering: Grouping similar data points
+- Association: Finding relationships between variables
+
+### Reinforcement Learning
+An agent learns to make decisions by receiving rewards or penalties for its actions in an environment.
+
+## Common Applications
+
+Machine learning is used in various domains:
+- **Healthcare**: Disease diagnosis and drug discovery
+- **Finance**: Fraud detection and algorithmic trading
+- **Technology**: Recommendation systems and search engines
+- **Automotive**: Self-driving cars and predictive maintenance
+
+## Key Algorithms
+
+- **Linear Regression**: Predicting continuous outcomes
+- **Decision Trees**: Making decisions based on feature splits
+- **Neural Networks**: Mimicking brain neurons for complex patterns
+- **Support Vector Machines**: Finding optimal decision boundaries
+- **Random Forest**: Combining multiple decision trees
+
+## Conclusion
+
+Machine learning continues to evolve rapidly, with new techniques and applications emerging regularly. Understanding these fundamentals provides a strong foundation for exploring more advanced topics in artificial intelligence.

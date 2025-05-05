@@ -8,9 +8,7 @@ numpy>=1.24.3
 
 # Document Processing
 pypdf>=6.0.0
+pandas>=2.2.2
 
 # Environment and Configuration
 python-dotenv>=1.0.1
-
-# Future enhancements (optional)
-# pandas>=2.2.2

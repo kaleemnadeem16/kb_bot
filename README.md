@@ -1,14 +1,33 @@
-# Simple Q&A Knowledge Base Bot
+# Knowledge Base Bot
 
 A powerful knowledge base chatbot that uses Retrieval-Augmented Generation (RAG) to answer questions from your local documents. Built with FAISS vector search and OpenAI's cost-effective GPT-4.1-nano model.
 
 ## 🚀 Features
 
+- **Multi-Format Support**: TXT, PDF, and CSV document processing
 - **Semantic Search**: Uses OpenAI embeddings and FAISS for intelligent document retrieval
 - **Cost-Effective**: Optimized for GPT-4.1-nano and text-embedding-3-small models
+- **Modular Architecture**: Clean, maintainable code structure with separated concerns
 - **Local Processing**: All your documents stay on your machine
-- **Interactive CLI**: Real-time question-answering interface
+- **Interactive CLI**: Real-time question-answering interface with stats and commands
 - **Smart Chunking**: Intelligent text splitting with overlap for better context
+- **Error Handling**: Robust error handling and demo mode support
+
+## 🏗️ Architecture
+
+```
+kb_bot/
+├── main.py                    # Entry point
+├── src/                      # Modular components
+│   ├── document_loader.py    # Multi-format document loading
+│   ├── text_processor.py     # Text cleaning and chunking
+│   ├── vector_store.py       # FAISS index management
+│   ├── ai_client.py          # OpenAI API interactions
+│   └── knowledge_base_bot.py # Main orchestration class
+├── data/                     # Your documents
+├── docs/                     # Project documentation
+└── requirements.txt          # Dependencies
+```
 
 ## 🛠️ Quick Setup
 
@@ -30,13 +49,20 @@ A powerful knowledge base chatbot that uses Retrieval-Augmented Generation (RAG)
    ```
 
 4. **Add your documents**
-   - Place your TXT files in the `data/` folder
-   - The bot will automatically process them
+   - Place your TXT, PDF, or CSV files in the `data/` folder
+   - The bot will automatically process all supported formats
 
 5. **Run the bot**
    ```bash
    python main.py
    ```
+
+## 🎮 Interactive Commands
+
+Once running, you can use these commands:
+- Ask any question about your documents
+- `stats` - Show current system statistics
+- `exit`, `quit`, or `q` - Stop the bot
 
 ## 💬 Example Usage
 
@@ -77,6 +103,7 @@ This bot is optimized for cost-effectiveness:
 - **GPT-4.1-nano**: $0.050/1M input tokens, $0.400/1M output tokens
 - **text-embedding-3-small**: Most cost-effective embedding model
 - **Local FAISS**: No external database costs
+- **Batch Processing**: Efficient API usage with request batching
 
 ## 🔧 Configuration
 
@@ -87,6 +114,18 @@ EMBEDDING_MODEL=text-embedding-3-small  # Embedding model
 CHUNK_SIZE=500                     # Text chunk size
 TEMPERATURE=0.1                    # Response creativity (0-1)
 ```
+
+## 🏗️ Development
+
+The bot uses a modular architecture for easy maintenance:
+
+- **DocumentLoader**: Handles TXT, PDF, CSV file loading with format-specific processing
+- **TextProcessor**: Cleans and intelligently chunks text with boundary detection
+- **VectorStore**: Manages FAISS index creation, persistence, and search operations
+- **AIClient**: Handles OpenAI API with batching, error handling, and demo mode
+- **KnowledgeBaseBot**: Orchestrates all components and provides the CLI interface
+
+To extend functionality, simply modify the relevant module without affecting others.
 
 ## 🤝 Contributing
 

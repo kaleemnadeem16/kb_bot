@@ -33,8 +33,8 @@ kb_bot/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/kb-bot.git
-   cd kb-bot
+   git clone https://github.com/kaleemnadeem16/kb_bot.git
+   cd kb_bot
    ```
 
 2. **Install dependencies**

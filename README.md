@@ -1,136 +1,118 @@
-# Knowledge Base Bot
+# kb_bot
 
-A powerful knowledge base chatbot that uses Retrieval-Augmented Generation (RAG) to answer questions from your local documents. Built with FAISS vector search and OpenAI's cost-effective GPT-4.1-nano model.
+Ask questions about your own documents and get answers with citations. A small, readable retrieval-augmented generation (RAG) bot: it splits your files into chunks, embeds them, stores them in a local FAISS index and answers from the best-matching passages.
 
-## 🚀 Features
+- **Reads:** `.txt`, `.md`, `.csv`, `.pdf` (PDF citations include the page number)
+- **Cites sources:** each answer lists the files (and PDF pages) its passages came from, with a similarity score. If nothing relevant is found it says so and lists no sources.
+- **Runs without an API key:** offline mode does keyword-level retrieval and shows the matching passages. Add an OpenAI key to get LLM-written answers.
+- **Local index:** vectors are saved in `vector_store/` and rebuilt automatically when your documents, chunk settings or embedding model change. A damaged or incompatible index is ignored and rebuilt.
+- **Tested:** 31 offline tests (`pytest`, no network). CI is configured for Python 3.10 and 3.12 (`.github/workflows/ci.yml`); the suite has so far only been run locally on 3.14.
 
-- **Multi-Format Support**: TXT, PDF, and CSV document processing
-- **Semantic Search**: Uses OpenAI embeddings and FAISS for intelligent document retrieval
-- **Cost-Effective**: Optimized for GPT-4.1-nano and text-embedding-3-small models
-- **Modular Architecture**: Clean, maintainable code structure with separated concerns
-- **Local Processing**: All your documents stay on your machine
-- **Interactive CLI**: Real-time question-answering interface with stats and commands
-- **Smart Chunking**: Intelligent text splitting with overlap for better context
-- **Error Handling**: Robust error handling and demo mode support
+**Status:** working CLI, not a hosted product. There is no web UI yet.
 
-## 🏗️ Architecture
+## Quick start
 
-```
-kb_bot/
-├── main.py                    # Entry point
-├── src/                      # Modular components
-│   ├── document_loader.py    # Multi-format document loading
-│   ├── text_processor.py     # Text cleaning and chunking
-│   ├── vector_store.py       # FAISS index management
-│   ├── ai_client.py          # OpenAI API interactions
-│   └── knowledge_base_bot.py # Main orchestration class
-├── data/                     # Your documents
-├── docs/                     # Project documentation
-└── requirements.txt          # Dependencies
-```
-
-## 🛠️ Quick Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/kaleemnadeem16/kb_bot.git
-   cd kb_bot
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your OpenAI API key
-   ```
-
-4. **Add your documents**
-   - Place your TXT, PDF, or CSV files in the `data/` folder
-   - The bot will automatically process all supported formats
-
-5. **Run the bot**
-   ```bash
-   python main.py
-   ```
-
-## 🎮 Interactive Commands
-
-Once running, you can use these commands:
-- Ask any question about your documents
-- `stats` - Show current system statistics
-- `exit`, `quit`, or `q` - Stop the bot
-
-## 💬 Example Usage
-
-```
-🤖 Knowledge Base Bot - Interactive Mode
-💡 Ask me anything about your documents!
-
-❓ You: What is artificial intelligence?
-🔍 Searching for: What is artificial intelligence?
-📄 Found 3 relevant chunk(s)
-🤖 Generating answer...
-
-💬 Answer:
-Artificial Intelligence (AI) refers to the simulation of human intelligence in machines...
-
-📚 Sources:
-  • ai_knowledge.txt (rank 1)
-  • ai_knowledge.txt (rank 2)
-```
-
-## 🏗️ How It Works
-
-1. **Document Loading**: Reads TXT files from the `data/` folder
-2. **Text Chunking**: Splits documents into overlapping chunks for better context
-3. **Embedding Generation**: Creates vector embeddings using OpenAI's text-embedding-3-small
-4. **Vector Storage**: Stores embeddings in FAISS for fast similarity search
-5. **Query Processing**: Finds relevant chunks and generates answers using GPT-4.1-nano
-
-## 📋 Requirements
-
-- Python 3.8+
-- OpenAI API key
-- ~50MB storage for vector index (depends on document size)
-
-## 💰 Cost Optimization
-
-This bot is optimized for cost-effectiveness:
-- **GPT-4.1-nano**: $0.050/1M input tokens, $0.400/1M output tokens
-- **text-embedding-3-small**: Most cost-effective embedding model
-- **Local FAISS**: No external database costs
-- **Batch Processing**: Efficient API usage with request batching
-
-## 🔧 Configuration
-
-Customize behavior in `.env`:
 ```bash
-OPENAI_MODEL=gpt-4.1-nano          # Chat completion model
-EMBEDDING_MODEL=text-embedding-3-small  # Embedding model
-CHUNK_SIZE=500                     # Text chunk size
-TEMPERATURE=0.1                    # Response creativity (0-1)
+git clone https://github.com/kaleemnadeem16/kb_bot.git
+cd kb_bot
+pip install -r requirements.txt
+
+python -m kb_bot -q "Which AI technologies are used in healthcare?"   # one question
+python -m kb_bot                                                      # interactive
 ```
 
-## 🏗️ Development
+The `data/` folder ships with three small sample files so it works immediately. To use your own documents, put them in a folder and pass `--data-dir path/to/docs`.
 
-The bot uses a modular architecture for easy maintenance:
+### With OpenAI answers
 
-- **DocumentLoader**: Handles TXT, PDF, CSV file loading with format-specific processing
-- **TextProcessor**: Cleans and intelligently chunks text with boundary detection
-- **VectorStore**: Manages FAISS index creation, persistence, and search operations
-- **AIClient**: Handles OpenAI API with batching, error handling, and demo mode
-- **KnowledgeBaseBot**: Orchestrates all components and provides the CLI interface
+```bash
+cp .env.example .env     # then set OPENAI_API_KEY=...
+python -m kb_bot -q "What is supervised learning?"
+```
 
-To extend functionality, simply modify the relevant module without affecting others.
+Defaults are `gpt-4.1-nano` for answers and `text-embedding-3-small` for embeddings (both configurable). Without a key, or with `--offline`, nothing is sent anywhere.
 
-## 🤝 Contributing
+### Docker
 
-Feel free to open issues or submit pull requests to improve the bot!
+```bash
+docker build -t kb_bot .
+docker run --rm -it -v "$PWD/my_docs:/app/data" -e OPENAI_API_KEY kb_bot -q "your question"
+```
 
-## 📄 License
+## Example (offline mode, abbreviated real output)
 
-MIT License - see LICENSE file for details
+```
+$ python -m kb_bot -q "Which AI technologies are used in healthcare?"
+Indexed 17 chunks from 3 files (offline mode: set OPENAI_API_KEY for LLM answers).
+
+(offline mode, no LLM: best matching passages)
+
+[1] ...## Where AI is used
+
+1. **Healthcare**: helping read medical scans, suggesting candidate drugs and supporting treatment planning. ...
+
+Sources:
+  [1] ai_knowledge.txt  (similarity 0.22)
+
+$ python -m kb_bot -q "chocolate cake recipe"
+I could not find anything relevant in the documents.
+```
+
+`--json` prints the same result as JSON, for scripting.
+
+## Options
+
+| Flag | Meaning |
+|---|---|
+| `-q "..."` | ask one question and exit (otherwise interactive; type `stats` or `exit`) |
+| `--data-dir DIR` | folder of documents (default `data`) |
+| `--top-k N` | passages to retrieve (default 4) |
+| `--rebuild` | ignore the saved index and re-embed everything |
+| `--offline` | never call OpenAI, even if a key is set |
+| `--json` | with `-q`, machine-readable output |
+
+Environment variables (see `.env.example`): `OPENAI_API_KEY`, `OPENAI_MODEL`, `EMBEDDING_MODEL`, `CHUNK_SIZE`, `CHUNK_OVERLAP`, `TOP_K`, `MIN_SCORE`, `TEMPERATURE`, `DATA_DIR`, `INDEX_DIR`. `MIN_SCORE` is an inclusive cosine-similarity floor (default 0, meaning only positive matches). Offline mode always applies its own floor of 0.15 to hide noise. Invalid values produce an error message, not a crash.
+
+## How it works
+
+```
+data/*.txt|md|csv|pdf
+   -> documents.py     load files (one document per PDF page, one line per CSV row)
+   -> chunking.py      ~500-char chunks with overlap, cut at paragraph / sentence boundaries
+   -> embeddings.py    OpenAI embeddings (retries with backoff) or the offline hashing embedder
+   -> vector_store.py  FAISS cosine index + meta.json, keyed by a hash of text + settings
+   -> answering.py     OpenAI chat with numbered, cited context, or the offline extractive answer
+   -> bot.py           KnowledgeBase.load() / .ask()
+```
+
+Use it from Python:
+
+```python
+from kb_bot import KnowledgeBase, Settings
+
+kb = KnowledgeBase(Settings.from_env())
+kb.load()
+result = kb.ask("What is deep learning?")
+print(result.text, [s.citation for s in result.sources])
+```
+
+## Limitations
+
+- Offline mode matches shared words, not meaning. Use an OpenAI key for semantic search.
+- The index is rebuilt in full when any document changes (fine for hundreds of files, not for huge corpora).
+- PDFs must contain selectable text; scanned PDFs need OCR first, which is not included.
+- The OpenAI code path (embeddings, chat, retries, error messages) is unit-tested with stubbed clients only. It has not been exercised against the live API in this repo's test suite.
+- Chunks can begin at a sentence fragment (they never begin mid-word, except inside a single very long unbroken string).
+- The Docker image has not been built in CI.
+- No authentication, web UI or multi-user support.
+
+## Development
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
+## License
+
+MIT, see [LICENSE](LICENSE). The sample files in `data/` are short generic texts about AI and machine learning.

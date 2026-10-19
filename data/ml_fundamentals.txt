@@ -1,40 +1,41 @@
-# Machine Learning Fundamentals
+# Machine Learning Basics (sample document)
 
-## What is Machine Learning?
+A short sample document for trying out kb_bot. Replace it with your own files.
 
-Machine Learning (ML) is a subset of artificial intelligence that enables computers to learn and make decisions from data without being explicitly programmed. It focuses on developing algorithms that can identify patterns in data and make predictions or decisions based on that information.
+## What machine learning is
 
-## Types of Machine Learning
+Machine learning (ML) lets a computer find patterns in data and use them to make predictions or decisions, without a programmer writing the rules by hand. You collect examples, train a model on them, then check how well it does on examples it has not seen.
 
-### Supervised Learning
-In supervised learning, algorithms learn from labeled training data to make predictions on new, unseen data. Examples include:
-- Classification: Predicting categories (spam vs. not spam)
-- Regression: Predicting continuous values (house prices)
+## Three common styles
 
-### Unsupervised Learning
-Unsupervised learning finds hidden patterns in data without labeled examples:
-- Clustering: Grouping similar data points
-- Association: Finding relationships between variables
+### Supervised learning
+In supervised learning every training example comes with the right answer, called a label. The model learns to map inputs to labels and is then used on new inputs. Two typical tasks:
+- Classification: choose a category, for example spam or not spam.
+- Regression: predict a number, for example the price of a house.
 
-### Reinforcement Learning
-An agent learns to make decisions by receiving rewards or penalties for its actions in an environment.
+### Unsupervised learning
+Here there are no labels. The model looks for structure on its own:
+- Clustering: grouping similar items, such as customers with similar buying habits.
+- Association: finding things that tend to occur together, such as products bought in the same basket.
 
-## Common Applications
+### Reinforcement learning
+An agent tries actions in an environment and gets rewards or penalties. Over many attempts it learns which behaviour earns the most reward. Game-playing programs and robot control are classic examples.
 
-Machine learning is used in various domains:
-- **Healthcare**: Disease diagnosis and drug discovery
-- **Finance**: Fraud detection and algorithmic trading
-- **Technology**: Recommendation systems and search engines
-- **Automotive**: Self-driving cars and predictive maintenance
+## Typical uses
 
-## Key Algorithms
+- **Healthcare**: spotting disease in images and predicting patient risk.
+- **Finance**: detecting fraud and scoring credit applications.
+- **Technology**: search ranking and product recommendations.
+- **Automotive**: lane detection and predicting when a part needs maintenance.
 
-- **Linear Regression**: Predicting continuous outcomes
-- **Decision Trees**: Making decisions based on feature splits
-- **Neural Networks**: Mimicking brain neurons for complex patterns
-- **Support Vector Machines**: Finding optimal decision boundaries
-- **Random Forest**: Combining multiple decision trees
+## Well-known algorithms
 
-## Conclusion
+- **Linear regression**: fits a straight-line relationship to predict a number.
+- **Decision trees**: split the data with a series of yes/no questions.
+- **Random forest**: averages many decision trees to get steadier answers.
+- **Support vector machines**: find the boundary that separates classes with the widest margin.
+- **Neural networks**: layers of simple connected units that can learn complex patterns.
 
-Machine learning continues to evolve rapidly, with new techniques and applications emerging regularly. Understanding these fundamentals provides a strong foundation for exploring more advanced topics in artificial intelligence.
+## Practical advice
+
+Good results depend more on clean, representative data than on the choice of algorithm. Always hold back some data for testing, and compare against a simple baseline before trusting a complicated model.

@@ -1,14 +1,5 @@
-# Knowledge Base Bot - Dependencies
-# Updated for cost-effective OpenAI models (April 2025)
-
-# Core AI/ML Dependencies
 openai>=1.35.5
 faiss-cpu>=1.8.0
 numpy>=1.24.3
-
-# Document Processing
-pypdf>=6.0.0
-pandas>=2.2.2
-
-# Environment and Configuration
+pypdf>=5.0.0
 python-dotenv>=1.0.1

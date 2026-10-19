@@ -1,11 +1,11 @@
 Technology,Description,Use Cases
-Machine Learning,Algorithms that learn from data without explicit programming,Recommendation systems; fraud detection; predictive analytics
-Deep Learning,Neural networks with multiple layers for complex pattern recognition,Image recognition; natural language processing; speech recognition
-Natural Language Processing,AI that understands and processes human language,Chatbots; translation services; sentiment analysis
-Computer Vision,AI that interprets and understands visual information,Autonomous vehicles; medical imaging; quality control
-Robotics,Integration of AI with mechanical systems,Manufacturing automation; surgical robots; service robots
-Expert Systems,AI that mimics human expert decision-making,Medical diagnosis; financial planning; troubleshooting
-Neural Networks,Computing systems inspired by biological neural networks,Pattern recognition; data classification; prediction
-Reinforcement Learning,Learning through interaction with environment and rewards,Game playing; robot navigation; resource allocation
-Fuzzy Logic,Reasoning with degrees of truth rather than binary logic,Control systems; decision making; approximate reasoning
-Genetic Algorithms,Optimization technique inspired by natural selection,Parameter optimization; feature selection; scheduling
+Machine Learning,Models that learn patterns from example data,Recommendations; fraud detection; demand forecasting
+Deep Learning,Neural networks with many layers for complex patterns,Image recognition; speech recognition; language models
+Natural Language Processing,Software that reads and generates human language,Chatbots; translation; sentiment analysis
+Computer Vision,Software that interprets images and video,Medical imaging; quality inspection; driver assistance
+Robotics,AI combined with mechanical systems,Warehouse automation; surgical assistance; delivery robots
+Expert Systems,Rule-based programs that encode specialist knowledge,Equipment troubleshooting; tax and loan checks
+Neural Networks,Layers of connected units inspired by the brain,Classification; prediction; pattern recognition
+Reinforcement Learning,Learning by trial and error from rewards,Game playing; robot control; resource scheduling
+Fuzzy Logic,Reasoning with degrees of truth instead of yes/no,Appliance control; approximate decision making
+Genetic Algorithms,Optimisation inspired by natural selection,Parameter tuning; feature selection; timetabling

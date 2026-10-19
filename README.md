@@ -6,7 +6,7 @@ Ask questions about your own documents and get answers with citations. A small, 
 - **Cites sources:** each answer lists the files (and PDF pages) its passages came from, with a similarity score. If nothing relevant is found it says so and lists no sources.
 - **Runs without an API key:** offline mode does keyword-level retrieval and shows the matching passages. Add an OpenAI key to get LLM-written answers.
 - **Local index:** vectors are saved in `vector_store/` and rebuilt automatically when your documents, chunk settings or embedding model change. A damaged or incompatible index is ignored and rebuilt.
-- **Tested:** 31 offline tests (`pytest`, no network). CI is configured for Python 3.10 and 3.12 (`.github/workflows/ci.yml`); the suite has so far only been run locally on 3.14.
+- **Tested:** 31 offline tests (`pytest`, no network). GitHub Actions runs them on Python 3.10 and 3.12 (`.github/workflows/ci.yml`).
 
 **Status:** working CLI, not a hosted product. There is no web UI yet.
 

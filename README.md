@@ -2,13 +2,14 @@
 
 Ask questions about your own documents and get answers with citations. A small, readable retrieval-augmented generation (RAG) bot: it splits your files into chunks, embeds them, stores them in a local FAISS index and answers from the best-matching passages.
 
+[![CI](https://github.com/kaleemnadeem16/kb_bot/actions/workflows/ci.yml/badge.svg)](https://github.com/kaleemnadeem16/kb_bot/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+**Status:** Beta. A working command-line tool with 31 offline tests and CI on Python 3.10 and 3.12. No web UI or hosted demo yet, and the OpenAI path is tested with stubs only (see Limitations).
+
 - **Reads:** `.txt`, `.md`, `.csv`, `.pdf` (PDF citations include the page number)
 - **Cites sources:** each answer lists the files (and PDF pages) its passages came from, with a similarity score. If nothing relevant is found it says so and lists no sources.
 - **Runs without an API key:** offline mode does keyword-level retrieval and shows the matching passages. Add an OpenAI key to get LLM-written answers.
 - **Local index:** vectors are saved in `vector_store/` and rebuilt automatically when your documents, chunk settings or embedding model change. A damaged or incompatible index is ignored and rebuilt.
-- **Tested:** 31 offline tests (`pytest`, no network). GitHub Actions runs them on Python 3.10 and 3.12 (`.github/workflows/ci.yml`).
-
-**Status:** working CLI, not a hosted product. There is no web UI yet.
 
 ## Quick start
 
@@ -105,6 +106,12 @@ print(result.text, [s.citation for s in result.sources])
 - Chunks can begin at a sentence fragment (they never begin mid-word, except inside a single very long unbroken string).
 - The Docker image has not been built in CI.
 - No authentication, web UI or multi-user support.
+
+## Roadmap
+
+- Hosted demo.
+- Exercise the live OpenAI path once and record the result.
+- Build the Docker image in CI.
 
 ## Development
 
